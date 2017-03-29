@@ -146,6 +146,7 @@ public class EffectFilter extends AFilter {
     //在流程中Filter是以前一个Filter的输出作为输入进行绘制的，输入输出都是TextureId。
     @Override
     public void draw() {
+        Log.d("draw start-->");
         GLES20.glGetIntegerv(GLES20.GL_FRAMEBUFFER_BINDING,outBindFrameBuffer,0);
         GLES20.glGetIntegerv(GLES20.GL_RENDERBUFFER_BINDING,outBindRenderBuffer,0);
         boolean isDepthEnable=GLES20.glIsEnabled(GLES20.GL_DEPTH_TEST);
@@ -186,6 +187,7 @@ public class EffectFilter extends AFilter {
             mShowFilter.setTextureId(mPostProcessFilter.getOutputTexture());
             mShowFilter.draw();
         }
+        Log.d("draw end-->");
     }
 
     private void changeGLState(int key,boolean isEnable){

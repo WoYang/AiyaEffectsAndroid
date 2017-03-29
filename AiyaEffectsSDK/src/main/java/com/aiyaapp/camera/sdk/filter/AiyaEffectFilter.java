@@ -150,6 +150,7 @@ public class AiyaEffectFilter extends AFilter {
     @Override
     public void draw() {
 
+        Log.d("draw start-->");
         if(getTexture()!=null){
             getTexture().updateTexImage();
             //此处不可缺，否则，在部分手机上，会出现绿边或其他类似现象。
@@ -158,30 +159,26 @@ public class AiyaEffectFilter extends AFilter {
         }
 
         //在离屏Buffer中绘制track的数据，并交给track处理
-        long start=System.currentTimeMillis();
+        Log.d("prepare start");
         mPreFilter.draw();
-        Log.d("track read------------------------>"+(System.currentTimeMillis()-start));
-        start=System.currentTimeMillis();
+        Log.d("prepare end");
         mPreProcessFilter.setTextureId(mPreFilter.getOutputTexture());
         mPreProcessFilter.draw();
 
-        Log.d("before filter------------------------>"+(System.currentTimeMillis()-start));
-        start=System.currentTimeMillis();
+        Log.d("before filter end");
         //获取缓存的texture绘制并处理
         mProcessFilter.setTextureId(mPreProcessFilter.getOutputTexture());
         mProcessFilter.draw();
-        Log.d("process------------------------>"+(System.currentTimeMillis()-start));
-        start=System.currentTimeMillis();
+        Log.d("process end");
         mPostProcessFilter.setTextureId(mProcessFilter.getOutputTexture());
         mPostProcessFilter.draw();
-        Log.d("after filter------------------------>"+(System.currentTimeMillis()-start));
+        Log.d("after filter end");
 
         Log.d("show data index->" + textureIndex);
         //显示出刚才绘制的内容
 //        GLES20.glViewport(0, 0, width, height);
 //        mShowFilter.setTextureId(mPostProcessFilter.getOutputTexture());
 //        mShowFilter.draw();
-        Log.d("beauty------------------------>"+(System.currentTimeMillis()-start));
     }
 
     //创建显示摄像头原始数据的OES TEXTURE
