@@ -18,4 +18,7 @@ public class MenuBean {
 
     public int id;
 
+    public int arg1;
+    public int arg2;
+
 }

@@ -15,6 +15,7 @@ import android.content.Context;
 public interface ISdkManager {
 
     String SET_BEAUTY_LEVEL="beauty_level";     //美颜等级，1-6，不在范围内表示关闭美颜
+    String SET_BEAUTY_TYPE="beauty_type";                  //美颜算法类型。
     String SET_EFFECT_ON="effects_on";          //特效开关1开0关
     String SET_OXEYE="oxeye";                   //是否大眼
     String SET_THIN_FACE="thin_face";           //是否瘦脸
@@ -40,6 +41,8 @@ public interface ISdkManager {
 
     int MODE_ORNAMENT=0;                        //饰品
     int MODE_GIFT=1;                            //礼物
+
+    int BEAUTY_TYPE_=1;
 //
 //    String SET_EFFECT="effect_path";            //设置贴纸效果
 

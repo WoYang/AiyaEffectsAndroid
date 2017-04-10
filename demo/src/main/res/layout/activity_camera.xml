@@ -49,4 +49,11 @@
         android:layout_above="@id/mOtherMenu"
         android:id="@+id/mMenuView" >
     </android.support.v7.widget.RecyclerView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/mOtherMenu"
+        android:visibility="gone"
+        android:id="@+id/mBeautyMenuView" >
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
