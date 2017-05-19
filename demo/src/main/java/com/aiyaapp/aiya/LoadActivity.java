@@ -51,8 +51,11 @@ public class LoadActivity extends AppCompatActivity {
             }
         };
         AiyaEffects.getInstance().registerObserver(observer);
+        /*AiyaEffects.getInstance().init(LoadActivity.this,getExternalFilesDir(null)
+            .getAbsolutePath()+"/146-563-918-415-578-677-783-748-043-705-956.vlc","");*/
+        //试用版licenseFile
         AiyaEffects.getInstance().init(LoadActivity.this,getExternalFilesDir(null)
-            .getAbsolutePath()+"/146-563-918-415-578-677-783-748-043-705-956.vlc","");
+            .getAbsolutePath()+"/970-978-153-385-692-417-977-719-497-977-917.vlc","");
     }
 
     public void onClick(View view){

@@ -9,12 +9,23 @@ import android.util.Log;
 final class AiyaCameraJni {
     private static final String TAG = "AiyaCameraJni";
 
+    private Context context;
+    private String configPath;
+    private String licensePath;
+
     public int init(Context context,String configPath,String licensePath,String appId,String
         hwId,String appKey) {
         if(context == null) {
             throw new IllegalArgumentException("context is null");
         }
+        this.context=context;
+        this.configPath=configPath;
+        this.licensePath=licensePath;
         return nSdkInit(context,configPath,licensePath,appId,hwId,appKey);
+    }
+
+    void trackReInit(){
+        nTrackReInit(context,configPath,licensePath);
     }
 
     public void setParameters(int width, int height, int format, int orientation, int flip,int outWidth, int outHeight, int outFormat, int outOrientation, int outFlip) {
@@ -53,6 +64,7 @@ final class AiyaCameraJni {
     private native int  nProcessFrame(int textureId,int width,int height,int trackIndex);
     private native int nSdkInit(Object context, String configPath, String licensePath,String
         appId,String hwId,String appKey);
+    private native int nTrackReInit(Object context, String configPath, String licensePath);
     private native void nConfig(String key,int value);
     private native void nRelease();
     private native int nTrack(byte[] rgbabuffer, int width, int height, float[] outfdp,int

@@ -7,26 +7,24 @@
  */
 package com.aiyaapp.camera.sdk;
 
-import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.telephony.TelephonyManager;
-
+import com.aiyaapp.camera.sdk.base.ActionObservable;
+import com.aiyaapp.camera.sdk.base.ActionObserver;
 import com.aiyaapp.camera.sdk.base.Assets;
+import com.aiyaapp.camera.sdk.base.Event;
 import com.aiyaapp.camera.sdk.base.ISdkManager;
 import com.aiyaapp.camera.sdk.base.Log;
 import com.aiyaapp.camera.sdk.base.Parameter;
 import com.aiyaapp.camera.sdk.base.ProcessCallback;
 import com.aiyaapp.camera.sdk.base.Rotation;
-import com.aiyaapp.camera.sdk.base.Event;
-import com.aiyaapp.camera.sdk.base.ActionObservable;
-import com.aiyaapp.camera.sdk.base.ActionObserver;
 import com.aiyaapp.camera.sdk.base.TrackCallback;
+import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 /**
  *  Sdk的核心接口，将工作线程、GL线程、人脸追踪线程分开，
@@ -71,7 +69,9 @@ public class AiyaEffects implements ISdkManager {
 
     private Object assetManager;
 
-    private Event mProcessEvent=new Event(Event.PROCESS_END,Event.PROCESS_PLAY,"",null);
+    private long lastInitTime=0;
+
+    private Event mProcessEvent=new Event(Event.PROCESS_END, Event.PROCESS_PLAY,"",null);
 
     private AiyaEffects(){
         mObservable=new ActionObservable();
@@ -133,7 +133,7 @@ public class AiyaEffects implements ISdkManager {
                 }
                 Log.e("prepare resource success:"+pb);
                 if(pb){
-                    mObservable.notifyState(new Event(Event.RESOURCE_READY,Event.RESOURCE_READY,"资源准备完成",null));
+                    mObservable.notifyState(new Event(Event.RESOURCE_READY, Event.RESOURCE_READY,"资源准备完成",null));
                     isResourceReady=true;
                     TelephonyManager tm = (TelephonyManager)context.getSystemService(Context
                         .TELEPHONY_SERVICE);
@@ -142,14 +142,15 @@ public class AiyaEffects implements ISdkManager {
                     Log.e("sticker jni init");
                     int state=mAiyaCameraJni.init(context,path,
                         licensePath,context.getPackageName(),DEVICE_ID,appKey);
+                    lastInitTime=System.currentTimeMillis();
                     Log.e("state="+state);
                     if(state==0){
-                        mObservable.notifyState(new Event(Event.INIT_SUCCESS,Event.INIT_SUCCESS,"初始化成功",null));
+                        mObservable.notifyState(new Event(Event.INIT_SUCCESS, Event.INIT_SUCCESS,"初始化成功",null));
                     }else{
                         mObservable.notifyState(new Event(Event.INIT_FAILED,state,"初始化失败",null));
                     }
                 }else{
-                    mObservable.notifyState(new Event(Event.RESOURCE_FAILED,Event.INIT_FAILED,"资源准备失败",null));
+                    mObservable.notifyState(new Event(Event.RESOURCE_FAILED, Event.INIT_FAILED,"资源准备失败",null));
                     isResourceReady=false;
                 }
             }
@@ -255,6 +256,10 @@ public class AiyaEffects implements ISdkManager {
     @Override
     public void track(final byte[] trackData, final float[] info, final int trackIndex) {
         if(isResourceReady){
+            if(System.currentTimeMillis()-lastInitTime>59000){
+                mAiyaCameraJni.trackReInit();
+                lastInitTime=System.currentTimeMillis();
+            }
             mTrackExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
