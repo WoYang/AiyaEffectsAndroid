@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.aiyaapp.aiya.camera.CameraActivity;
+import com.aiyaapp.aiya.media.MediaActivity;
 import com.aiyaapp.aiya.mvc.SurfaceHolderActivity;
 import com.aiyaapp.aiya.mvc.TextureViewActivity;
 import com.aiyaapp.aiya.util.PermissionUtils;
@@ -92,6 +93,9 @@ public class LoadActivity extends AppCompatActivity {
                 break;
             case R.id.mHolder:
                 startActivity(new Intent(this, SurfaceHolderActivity.class));
+                break;
+            case R.id.mMedia:
+                startActivity(new Intent(this, MediaActivity.class));
                 break;
         }
     }

@@ -1,0 +1,20 @@
+{
+	"effects":[
+		{
+		"effect":"baowener",
+		"time":10000,
+		"beauty":0
+		},
+		{
+		"effect":"oldman",
+		"time":10000,
+		"beauty":4
+		},
+		{
+		"effect":"huahuan3D",
+		"time":10000,
+		"beauty":3
+		}
+	],
+	"video":"assets/test/test.mp4"
+}
