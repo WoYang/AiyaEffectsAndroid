@@ -181,7 +181,7 @@ public class EffectSelectActivity extends AppCompatActivity {
         menu0.arg1=0;
         menu0.arg2=0;
         mBeautyData.add(menu0);
-        int[] type=new int[]{1,4,5};
+        int[] type=new int[]{0,1,4,5};
         for (int i:type){
             for (int j=1;j<7;j++){
                 MenuBean menu=new MenuBean();
