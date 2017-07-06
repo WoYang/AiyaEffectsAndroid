@@ -27,7 +27,7 @@ public class PrepareFilter extends AFilter {
     private AiyaFilter mFilter;
     private int width=0;
     private int height=0;
-    private float[] infos = new float[20];
+    private float[] infos = new float[200];
     private int nowTextureIndex=0;
 
     private int fTextureSize = 2;
@@ -89,10 +89,14 @@ public class PrepareFilter extends AFilter {
         }
         mFilter.setTextureId(getTextureId());
         EasyGlUtils.bindFrameTexture(fFrame[0],fTexture[nowTextureIndex]);
-        GLES20.glViewport(0,0, AiyaEffects.getInstance().get(ISdkManager.SET_TRACK_WIDTH),
-            AiyaEffects.getInstance().get(ISdkManager.SET_TRACK_HEIGHT));
-        mFilter.draw();
-        AiyaEffects.getInstance().track(getTrackData(), infos, nowTextureIndex);
+        if(AiyaEffects.getInstance().isNeedTrack()){
+            GLES20.glViewport(0,0, AiyaEffects.getInstance().get(ISdkManager.SET_TRACK_WIDTH),
+                AiyaEffects.getInstance().get(ISdkManager.SET_TRACK_HEIGHT));
+            mFilter.draw();
+            AiyaEffects.getInstance().track(getTrackData(), infos, nowTextureIndex);
+        }else{
+            AiyaEffects.getInstance().track(null, infos, nowTextureIndex);
+        }
         GLES20.glViewport(0,0,width,height);
         mFilter.draw();
         EasyGlUtils.unBindFrameBuffer();

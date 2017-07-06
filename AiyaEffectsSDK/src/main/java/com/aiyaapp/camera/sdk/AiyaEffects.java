@@ -67,8 +67,13 @@ public class AiyaEffects implements ISdkManager {
 
     private int mMode=0;
 
+    private int oxEye=0;
+    private int thinFace=0;
+    private int beautyLevel=0;
+
     private boolean isResourceReady=false;
     private Semaphore mSemaphore;
+    private boolean isBeautyNeedTrack=false;
 
     private Object assetManager;
 
@@ -244,11 +249,31 @@ public class AiyaEffects implements ISdkManager {
             case SET_TRACK_HEIGHT:
                 mTrackHeight=value;
                 break;
+            case SET_BEAUTY_LEVEL:
+                beautyLevel=value;
+                mAiyaCameraJni.set(key,value);
+                break;
             case SET_MODE:
                 this.mMode=value;
                 break;
             case SET_TRACK_FORCE_CLOSE:
                 this.forceCloseTrack=value;
+                break;
+            case SET_OXEYE:
+                oxEye=value;
+                isBeautyNeedTrack=oxEye>0||thinFace>0;
+                if (isBeautyNeedTrack&&beautyLevel==0){
+                    mAiyaCameraJni.set(SET_BEAUTY_LEVEL,1);
+                }
+                mAiyaCameraJni.set(key, value);
+                break;
+            case SET_THIN_FACE:
+                thinFace=value;
+                isBeautyNeedTrack=oxEye>0||thinFace>0;
+                if (isBeautyNeedTrack&&beautyLevel==0){
+                    mAiyaCameraJni.set(SET_BEAUTY_LEVEL,1);
+                }
+                mAiyaCameraJni.set(key, value);
                 break;
             case SET_ACTION:
                 switch (value){
@@ -270,13 +295,17 @@ public class AiyaEffects implements ISdkManager {
         }
     }
 
+    public boolean isNeedTrack(){
+        return (currentEffect!=null||isBeautyNeedTrack)&&forceCloseTrack==FALSE;
+    }
+
     @Override
     public void track(final byte[] trackData, final float[] info, final int trackIndex) {
         if(isResourceReady){
             mTrackExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    if(currentEffect==null||forceCloseTrack==TRUE){
+                    if((currentEffect==null&&!isBeautyNeedTrack)||forceCloseTrack==TRUE){
                         mSemaphore.release();
                         return;
                     }
@@ -290,6 +319,11 @@ public class AiyaEffects implements ISdkManager {
                     mSemaphore.release();
                 }
             });
+            try {
+                mSemaphore.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -297,11 +331,6 @@ public class AiyaEffects implements ISdkManager {
     @Override
     public void process(int textureId, int trackIndex) {
         if(isResourceReady){
-            try {
-                mSemaphore.acquire();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             if(!isSetParam){
                 setParameters(input,output);
             }
@@ -313,12 +342,12 @@ public class AiyaEffects implements ISdkManager {
             if(mProcessCallback!=null){
                 mProcessCallback.onFinished();
             }
-            if(mMode==MODE_GIFT&&ret==STATE_EFFECT_END){
-                setEffect(null);
-            }
             if(ret==STATE_EFFECT_END){
                 mProcessEvent.strTag=currentEffect;
                 mObservable.notifyState(mProcessEvent);
+            }
+            if(mMode==MODE_GIFT&&ret==STATE_EFFECT_END){
+                setEffect(null);
             }
         }
     }
