@@ -1,0 +1,49 @@
+particle colors_bling
+{
+    sprite
+    {
+        path = sprite_type3.png
+        width = 102
+        height = 102
+        blendMode = ADDITIVE
+        animated = true
+        looped = false
+        frameCount = 100
+        frameRandomOffset = 1
+        frameDuration = 10
+    }
+
+    particleCountMax = 1000
+    emissionRate = 20
+    ellipsoid = true
+    orbitPosition = true
+    orbitVelocity = true
+    orbitAcceleration = false
+    sizeStartMin = 30
+    sizeStartMax = 100
+    sizeEndMin = 30
+    sizeEndMax = 100
+    energyMin = 5000
+    energyMax = 5000
+    colorStart = 1, 1, 1, 0.7
+    colorStartVar = 0.05, 0.05, 0.05, 0.1
+    colorEnd = 1, 1, 1, 0.3
+    colorEndVar = 0.05, 0.05, 0.05, 0.1
+    position = 0, 0, -100
+    positionVar = 780, 780, 0
+    velocity = 0, 0, 55
+    velocityVar = 30, 30, 0
+    acceleration = 0, 0, 0
+    accelerationVar = 0, 0, 0
+    rotationPerParticleSpeedMin = 2
+    rotationPerParticleSpeedMax = -2
+
+    editor
+    {
+        cameraTranslation = 0.22, 2.7, 0
+        cameraZoom = 0, 0, 400
+        cameraRotation = 0, 0, 0, 0
+        sizeMax = 5
+        energyMax = 1500
+    }
+}

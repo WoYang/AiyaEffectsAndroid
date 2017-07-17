@@ -1,0 +1,14 @@
+{
+  "format" : "1",
+  "name":"全景",
+  "needtrack" : 0,
+  "nodes" :  [
+    {
+	  "type":"particle",
+      "filename" : "binggan.particle",
+	  "filename" : "tang.particle",
+      "platWidth" : 720,
+	  "platHeight" : 1280,
+    }
+  ]
+}

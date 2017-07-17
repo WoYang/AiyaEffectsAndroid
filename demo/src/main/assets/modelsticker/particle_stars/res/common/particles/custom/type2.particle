@@ -1,0 +1,51 @@
+particle colors
+{
+    sprite
+    {
+        path = sprite_type2.png
+        width = 39
+        height = 39
+        blendMode = ADDITIVE
+        animated = true
+        looped = false
+        frameCount = 169
+        frameRandomOffset = 1
+        frameDuration = 300
+    }
+
+    particleCountMax = 1000
+    emissionRate = 40
+    ellipsoid = true
+    orbitPosition = true
+    orbitVelocity = true
+    orbitAcceleration = false
+    sizeStartMin = 1
+    sizeStartMax = 10
+    sizeEndMin = 1
+    sizeEndMax = 10
+    energyMin = 10000
+    energyMax = 10000
+    colorStart = 1, 1, 1, 0.8
+    colorStartVar = 1.5, 1.5, 1.5, 0.3
+    colorEnd = 1, 1, 1, 0.4
+    colorEndVar = 0.5, 0.5, 0.5, 0.3
+
+    position = 0, 0, -200
+    positionVar = 500, 500, 0
+    velocity = 0, 0, 50
+    velocityVar = 0, 0, 30
+    acceleration = 0, 0, 0
+    accelerationVar = 0, -2, 0
+	
+    rotationPerParticleSpeedMin = 0
+    rotationPerParticleSpeedMax = 0
+
+    editor
+    {
+        cameraTranslation = 0.22, 2.7, 0
+        cameraZoom = 0, 0, 400
+        cameraRotation = 0, 0, 0, 0
+        sizeMax = 5
+        energyMax = 1500
+    }
+}

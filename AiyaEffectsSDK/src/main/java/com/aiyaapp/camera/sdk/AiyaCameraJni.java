@@ -6,7 +6,7 @@ import android.util.Log;
 /**
  * 核心功能的JNI接口
  */
-final class AiyaCameraJni {
+public final class AiyaCameraJni {
     private static final String TAG = "AiyaCameraJni";
 
     public int init(Context context,String configPath,String licensePath,String appId,String
@@ -37,7 +37,6 @@ final class AiyaCameraJni {
     public int processFrame(int textureId,int width,int height,int trackIndex){
         return nProcessFrame(textureId,width,height,trackIndex);
     }
-
     //outfdp 长度为19
     public int track(byte[] rgbabuffer, int width, int height, float[] outfdp,int trackIndex){
         return nTrack(rgbabuffer,width,height,outfdp,trackIndex);
@@ -46,6 +45,8 @@ final class AiyaCameraJni {
     public void release() {
         nRelease();
     }
+
+    public native void sensorChanged( float[] data );
 
     private native void nInitLicense(Object context,String licensePath);
     private native void nSetParameters(int width, int height, int format, int orientation, int flip,int outWidth, int outHeight, int outFormat, int outOrientation, int outFlip);

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import com.aiyaapp.camera.sdk.sensor.SensorHelper;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,6 +53,7 @@ public class EffectSelectActivity extends AppCompatActivity {
     private MenuAdapter mStickerAdapter;
     private TextView mBtnStick,mBtnBeauty;
     private int mBeautyFlag=0;
+    private SensorHelper mSensorHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +67,7 @@ public class EffectSelectActivity extends AppCompatActivity {
         mBtnBeauty= (TextView)findViewById(R.id.mRight);
         mBtnStick.setSelected(true);
         refreshRightBtn();
-
+        mSensorHelper=new SensorHelper(getApplicationContext());
         mStickerData=new ArrayList<>();
         mMenuView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         mStickerAdapter=new MenuAdapter(this,mStickerData);
@@ -254,5 +256,17 @@ public class EffectSelectActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorHelper.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSensorHelper.stop();
     }
 }

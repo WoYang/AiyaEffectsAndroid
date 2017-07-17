@@ -1,0 +1,53 @@
+particle binggan
+{
+    sprite
+    {
+        path = binggan_image.png
+        width = 128
+        height = 128
+        blending = ALPHA
+        animated = true
+        looped = true
+        frameCount = 64
+        frameRandomOffset = 0
+        frameDuration = 60
+    }
+
+    particleCountMax = 400
+    emissionRate = 20
+    ellipsoid = true
+    orbitPosition = true
+    orbitVelocity = true
+    orbitAcceleration = false
+    sizeStartMin = 1
+    sizeStartMax = 1
+    sizeEndMin = 1
+    sizeEndMax = 1
+    energyMin = 0
+    energyMax = 40000
+    colorStart = 1.0, 1.0, 1.0, 1.0
+    colorStartVar = 0.0, 0.0, 0.0, 0.0
+    colorEnd = 1.0, 1.0, 1.0, 1.0
+    colorEndVar = 0.0, 0.0, 0.0, 0.0
+    position = 0, 0, -20
+    positionVar = 20, 30, 1
+    velocity = 0, 0, 0.3
+    velocityVar = 0, 0, 0.3
+    acceleration = 0, 0, 1.0
+    accelerationVar = 0.1, 0.1, 0.2
+    rotationPerParticleSpeedMin = -1.0
+    rotationPerParticleSpeedMax = 1.0
+	rotationSpeedMin = -1.0
+	rotationSpeedMax = 1.0
+	rotationAxis = 0, 0, 0
+	rotationAxisVar = 0, 0, 0
+
+    editor
+    {
+        cameraTranslation = 0.0, 0.0, 0.0
+        cameraZoom = 0, 0, 10.0
+        cameraRotation = 0, 0, 0, 0
+        sizeMax = 5
+        energyMax = 15000
+    }
+}

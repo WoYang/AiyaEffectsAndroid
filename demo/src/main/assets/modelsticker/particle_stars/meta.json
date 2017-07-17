@@ -1,0 +1,15 @@
+{
+  "format" : "1",
+  "name":"全景",
+  "needtrack" : 0,
+  "nodes" :  [
+    {
+	  "type":"particle",
+      "filename" : "type1.particle",
+	  "filename" : "type2.particle",
+	  "filename" : "type3.particle",
+      "platWidth" : 720,
+	  "platHeight" : 1280,
+    }
+  ]
+}

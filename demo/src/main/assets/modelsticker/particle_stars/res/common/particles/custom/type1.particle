@@ -1,0 +1,49 @@
+particle colors_circle
+{
+    sprite
+    {
+        path = sprite_type1.png
+        width = 102
+        height = 102
+        blendMode = ADDITIVE
+        animated = true
+        looped = false
+        frameCount = 100
+        frameRandomOffset = 1
+        frameDuration = 10
+    }
+
+    particleCountMax = 1000
+    emissionRate = 50
+    ellipsoid = true
+    orbitPosition = true
+    orbitVelocity = true
+    orbitAcceleration = false
+    sizeStartMin = 90
+    sizeStartMax = 250
+    sizeEndMin = 90
+    sizeEndMax = 250
+    energyMin = 2500
+    energyMax = 2500
+    colorStart = 1, 1, 1, 0.3
+    colorStartVar = 0.3, 0.3, 0.3, 0
+    colorEnd = 1, 1, 1, 0.2
+    colorEndVar = 0.15, 0.15, 0.15, 0
+    position = 0, 0, -300
+    positionVar = 820, 820, 0
+    velocity = 0, 0, 0
+    velocityVar = 50, 50, 0
+    acceleration = 0, 0, 0
+    accelerationVar = 0, 0, 0
+    rotationPerParticleSpeedMin = 0
+    rotationPerParticleSpeedMax = 0
+
+    editor
+    {
+        cameraTranslation = 0.22, 2.7, 0
+        cameraZoom = 0, 0, 400
+        cameraRotation = 0, 0, 0, 0
+        sizeMax = 5
+        energyMax = 1500
+    }
+}
