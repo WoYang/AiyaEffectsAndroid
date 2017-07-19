@@ -29,10 +29,10 @@ particle colors_circle
     colorStartVar = 0.3, 0.3, 0.3, 0
     colorEnd = 1, 1, 1, 0.2
     colorEndVar = 0.15, 0.15, 0.15, 0
-    position = 0, 0, -300
-    positionVar = 820, 820, 0
+    position = 0, -300, 0
+    positionVar = 820, 0, 820
     velocity = 0, 0, 0
-    velocityVar = 50, 50, 0
+    velocityVar = 50, 0, 50
     acceleration = 0, 0, 0
     accelerationVar = 0, 0, 0
     rotationPerParticleSpeedMin = 0

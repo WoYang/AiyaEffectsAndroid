@@ -109,16 +109,17 @@ public class SensorHelper {
                     System.arraycopy(event.values,0,gyroscope,0,3);
                     break;
                 case Sensor.TYPE_ROTATION_VECTOR:
-                    float v4 = event.values[4];
-                    if(v4<-0.999999f){
-                        android.util.Log.e("AYEFFECTS", "v4: " + v4);
-                    }
-                    else{
+                    //float v4 = event.values[4];
+                    //if(v4<-0.999999f){
+                    //    android.util.Log.e("AYEFFECTS", "v4: " + v4);
+                    //}
+                    //else{
                         deltaRotationVector[0] = event.values[0];
                         deltaRotationVector[1] = event.values[1];
                         deltaRotationVector[2] = event.values[2];
                         deltaRotationVector[3] = event.values[3];
-                    }
+                    Log.e(event.values[0]+"/"+event.values[1]+"/"+event.values[2]);
+                    //}
                     break;
                 }
             }

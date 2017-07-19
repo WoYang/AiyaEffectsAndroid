@@ -30,12 +30,12 @@ particle colors
     colorEnd = 1, 1, 1, 0.4
     colorEndVar = 0.5, 0.5, 0.5, 0.3
 
-    position = 0, 0, -200
-    positionVar = 500, 500, 0
-    velocity = 0, 0, 50
-    velocityVar = 0, 0, 30
+    position = 0, -200, 0
+    positionVar = 500, 0, 500
+    velocity = 0, 50, 0
+    velocityVar = 0, 30, 0
     acceleration = 0, 0, 0
-    accelerationVar = 0, -2, 0
+    accelerationVar = 0, 0, -2
 	
     rotationPerParticleSpeedMin = 0
     rotationPerParticleSpeedMax = 0

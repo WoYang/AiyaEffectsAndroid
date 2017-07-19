@@ -29,10 +29,10 @@ particle colors_bling
     colorStartVar = 0.05, 0.05, 0.05, 0.1
     colorEnd = 1, 1, 1, 0.3
     colorEndVar = 0.05, 0.05, 0.05, 0.1
-    position = 0, 0, -100
-    positionVar = 780, 780, 0
-    velocity = 0, 0, 55
-    velocityVar = 30, 30, 0
+    position = 0, -100, 0
+    positionVar = 780, 0, 780
+    velocity = 0, 55, 0
+    velocityVar = 30, 0, 30
     acceleration = 0, 0, 0
     accelerationVar = 0, 0, 0
     rotationPerParticleSpeedMin = 2

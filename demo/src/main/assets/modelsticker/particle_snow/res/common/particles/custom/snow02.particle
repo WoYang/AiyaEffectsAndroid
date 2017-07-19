@@ -29,11 +29,11 @@ particle snow02
     colorStartVar = 0.0, 0.0, 0.0, 0.0
     colorEnd = 1.0, 1.0, 1.0, 1.0
     colorEndVar = 0.0, 0.0, 0.0, 0.0
-    position = 0, 0, -100
-    positionVar = 20, 50, 1
-    velocity = 0, 0, 0.3
-    velocityVar = 0, 0, 0.1
-    acceleration = 0, 0, 0.2
+    position = 0, -100, 0
+    positionVar = 20, 1, 50
+    velocity = 0, 0.3, 0
+    velocityVar = 0, 0.1, 0
+    acceleration = 0, 0.2, 0
     accelerationVar = 0.1, 0.1, 0.1
     rotationPerParticleSpeedMin = -1.0
     rotationPerParticleSpeedMax = 1.0
