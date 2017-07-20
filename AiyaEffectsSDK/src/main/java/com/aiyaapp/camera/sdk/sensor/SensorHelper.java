@@ -118,7 +118,7 @@ public class SensorHelper {
                         deltaRotationVector[1] = event.values[1];
                         deltaRotationVector[2] = event.values[2];
                         deltaRotationVector[3] = event.values[3];
-                    Log.e(event.values[0]+"/"+event.values[1]+"/"+event.values[2]);
+                    Log.e(event.values[0]+"/"+event.values[1]+"/"+event.values[2]+"/"+event.values[3]);
                     //}
                     break;
                 }
@@ -128,6 +128,7 @@ public class SensorHelper {
             System.arraycopy(linear_acceleration,0,result,0,3);
             System.arraycopy(gyroscope,0,result,3,3);
             System.arraycopy(deltaRotationVector, 0, result, 6, 4);
+            Log.e(result[0]+"/"+result[1]+"/"+result[2]+"/"+result[3]+result[4]+"/"+result[6]+"/"+result[7]+"/"+result[8]);
             mAiyaJni.sensorChanged(result);
         }
 

@@ -58,6 +58,7 @@ public class EffectSelectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSensorHelper=new SensorHelper(getApplicationContext());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -67,7 +68,6 @@ public class EffectSelectActivity extends AppCompatActivity {
         mBtnBeauty= (TextView)findViewById(R.id.mRight);
         mBtnStick.setSelected(true);
         refreshRightBtn();
-        mSensorHelper=new SensorHelper(getApplicationContext());
         mStickerData=new ArrayList<>();
         mMenuView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false));
         mStickerAdapter=new MenuAdapter(this,mStickerData);
