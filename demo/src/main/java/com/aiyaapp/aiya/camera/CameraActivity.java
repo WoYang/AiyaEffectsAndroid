@@ -12,6 +12,7 @@ import com.aiyaapp.camera.sdk.AiyaEffects;
 import com.aiyaapp.camera.sdk.base.ISdkManager;
 import com.aiyaapp.camera.sdk.filter.AiyaEffectFilter;
 import com.aiyaapp.camera.sdk.filter.LookupFilter;
+import com.aiyaapp.camera.sdk.filter.SdkBeauty;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -82,6 +83,19 @@ public class CameraActivity extends EffectSelectActivity implements FrameCallbac
             //mCameraView.addFilter(filter,true);
             //强制关闭人脸检测
             //AiyaEffects.getInstance().set(ISdkManager.SET_TRACK_FORCE_CLOSE,ISdkManager.TRUE);
+            //自己组合美颜的示例
+            //SdkBeauty beauty=new SdkBeauty(getResources());
+            //beauty.setType(ISdkManager.BEAUTY_SMOOTH);
+            //beauty.setLevel(6);
+            //mCameraView.addFilter(beauty,true);
+            //SdkBeauty beauty2=new SdkBeauty(getResources());
+            //beauty2.setType(ISdkManager.BEAUTY_WHITEN);
+            //beauty2.setLevel(6);
+            //mCameraView.addFilter(beauty2,true);
+            //SdkBeauty beauty3=new SdkBeauty(getResources());
+            //beauty3.setType(ISdkManager.BEAUTY_SATURATE);
+            //beauty3.setLevel(6);
+            //mCameraView.addFilter(beauty3,true);
             initData();
             mCameraView.setEffect(null);
         }

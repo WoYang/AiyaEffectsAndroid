@@ -46,6 +46,16 @@ public final class AiyaCameraJni {
         nRelease();
     }
 
+    //磨皮接口，当前type只支持0x0010
+    public native int Smooth(int texId, int width, int height, int level, int type);
+
+    //红润接口，当前type只支持0x0020
+    public native int Saturate(int texId, int width, int height, int level, int type);
+
+    //美白接口，当前type只支持0x0030
+    public native int Whiten(int texId, int width, int height, int level, int type);
+
+
     public native void sensorChanged( float[] data );
 
     private native void nInitLicense(Object context,String licensePath);

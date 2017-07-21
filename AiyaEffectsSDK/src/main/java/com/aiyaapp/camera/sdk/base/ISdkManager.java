@@ -59,6 +59,10 @@ public interface ISdkManager {
 
     int TRUE=1;
     int FALSE=0;
+
+    int BEAUTY_SMOOTH=0x0010;
+    int BEAUTY_SATURATE=0x0020;
+    int BEAUTY_WHITEN=0x0030;
 //
 //    String SET_EFFECT="effect_path";            //设置贴纸效果
 
