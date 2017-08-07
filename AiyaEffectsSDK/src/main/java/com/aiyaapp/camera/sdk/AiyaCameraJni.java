@@ -45,14 +45,6 @@ public final class AiyaCameraJni {
     public void release() {
         nRelease();
     }
-    //磨皮接口，当前type只支持0x0010
-    public native int Smooth(int texId, int width, int height, int level, int type);
-
-    //红润接口，当前type只支持0x0020
-    public native int Saturate(int texId, int width, int height, int level, int type);
-
-    //美白接口，当前type只支持0x0030
-    public native int Whiten(int texId, int width, int height, int level, int type);
 
     //磨皮接口，当前type只支持0x0010
     public native int Smooth(int texId, int width, int height, int level, int type);
@@ -82,6 +74,7 @@ public final class AiyaCameraJni {
         System.loadLibrary("simd");
         System.loadLibrary("aftk");
         System.loadLibrary("assimp");
+        System.loadLibrary("gameplay");
         System.loadLibrary("ayeffects");
         System.loadLibrary("AiyaJniWrapper");
     }

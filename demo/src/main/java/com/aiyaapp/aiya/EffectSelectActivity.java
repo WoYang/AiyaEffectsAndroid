@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import com.aiyaapp.camera.sdk.sensor.SensorHelper;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,10 +49,12 @@ public class EffectSelectActivity extends AppCompatActivity implements EffectAda
     protected EffectController mEffectPopup;
     private View mBtnContainer;
     private View mEffectContainer;
+    private SensorHelper mSensorHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSensorHelper=new SensorHelper(getApplicationContext());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -211,5 +214,17 @@ public class EffectSelectActivity extends AppCompatActivity implements EffectAda
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorHelper.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSensorHelper.stop();
     }
 }
