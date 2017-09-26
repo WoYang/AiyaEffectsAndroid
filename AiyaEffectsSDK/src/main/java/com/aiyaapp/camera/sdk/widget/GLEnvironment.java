@@ -5,6 +5,9 @@ import android.opengl.GLDebugHelper;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.SurfaceHolder;
+
+import com.aiyaapp.camera.sdk.base.Renderer;
+
 import java.io.Writer;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -698,6 +701,13 @@ public class GLEnvironment implements SurfaceHolder.Callback2 {
          */
         private void stopEglContextLocked() {
             if (mHaveEglContext) {
+                //todo 释放EGLContext
+                GLEnvironment view = mGLSurfaceViewWeakRef.get();
+                if(view!=null){
+                    if(view.mRenderer instanceof Renderer){
+                        ((Renderer) view.mRenderer).onDestroy();
+                    }
+                }
                 mEglHelper.finish();
                 mHaveEglContext = false;
                 sGLThreadManager.releaseEglContextLocked(this);

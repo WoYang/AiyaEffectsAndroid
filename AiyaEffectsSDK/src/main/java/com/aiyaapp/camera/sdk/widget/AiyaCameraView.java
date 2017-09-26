@@ -22,6 +22,7 @@ import android.util.AttributeSet;
 import com.aiyaapp.camera.sdk.AiyaEffects;
 import com.aiyaapp.camera.sdk.base.FrameCallback;
 import com.aiyaapp.camera.sdk.base.ProcessCallback;
+import com.aiyaapp.camera.sdk.base.Renderer;
 import com.aiyaapp.camera.sdk.base.TrackCallback;
 import com.aiyaapp.camera.sdk.etest.EData;
 import com.aiyaapp.camera.sdk.filter.AFilter;
@@ -34,7 +35,7 @@ import com.aiyaapp.camera.sdk.filter.NoFilter;
  * Description:
  */
 @Deprecated
-public class AiyaCameraView extends GLSurfaceView implements GLSurfaceView.Renderer {
+public class AiyaCameraView extends GLSurfaceView implements Renderer {
 
     private AiyaCamera mCamera;
     private AiyaEffectFilter mEffectFilter;
@@ -237,7 +238,12 @@ public class AiyaCameraView extends GLSurfaceView implements GLSurfaceView.Rende
         mFrameCallback.onFrame(outPutBuffer[indexOutput].array(),mEffectFilter.getTexture().getTimestamp());
     }
 
-    public void onDestroy(){
+    @Override
+    public void onDestroy() {
+        AiyaEffects.getInstance().release();
+    }
+
+    public void destroy(){
         setPreserveEGLContextOnPause(false);
         onPause();
     }

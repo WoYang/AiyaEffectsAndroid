@@ -35,12 +35,13 @@ import com.aiyaapp.camera.sdk.filter.AiyaEffectFilter;
 import com.aiyaapp.camera.sdk.filter.EasyGlUtils;
 import com.aiyaapp.camera.sdk.filter.MatrixUtils;
 import com.aiyaapp.camera.sdk.filter.NoFilter;
+import com.wuwang.aavt.gl.YuvOutputFilter;
 
 /**
  * 借助GLSurfaceView创建的GL环境，做渲染工作。不将内容渲染到GLSurfaceView
  * 的Surface上，而是将内容绘制到外部提供的Surface、SurfaceHolder或者SurfaceTexture上。
  */
-public class AiyaController implements GLSurfaceView.Renderer {
+public class AiyaController implements Renderer {
 
     private Object surface;
 
@@ -66,10 +67,12 @@ public class AiyaController implements GLSurfaceView.Renderer {
 
     private boolean isRecord=false;                             //录像flag
     private boolean isShoot=false;                              //一次拍摄flag
-    private ByteBuffer[] outPutBuffer = new ByteBuffer[3];      //用于存储回调数据的buffer
+    private byte[][] outPutBuffer = new byte[3][];      //用于存储回调数据的buffer
     private FrameCallback mFrameCallback;                       //回调
     private int frameCallbackWidth, frameCallbackHeight;        //回调数据的宽高
     private int indexOutput=0;                                  //回调数据使用的buffer索引
+
+    private YuvOutputFilter mYuvOutput;
 
     public AiyaController(Context context) {
         this.mContext=context;
@@ -112,6 +115,8 @@ public class AiyaController implements GLSurfaceView.Renderer {
             }
         };
 
+        mYuvOutput=new YuvOutputFilter(YuvOutputFilter.EXPORT_TYPE_I420);
+
         mEffect= AiyaEffects.getInstance();
 
         //设置默认的DateSize，DataSize由AiyaProvider根据数据源的图像宽高进行设置
@@ -144,6 +149,7 @@ public class AiyaController implements GLSurfaceView.Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        mYuvOutput.create();
         mEffectFilter.create();
         mShowFilter.create();
         if(!isParamSet.get()){
@@ -265,8 +271,8 @@ public class AiyaController implements GLSurfaceView.Renderer {
         this.frameCallbackWidth =width;
         this.frameCallbackHeight = height;
         if (frameCallbackWidth > 0 && frameCallbackHeight > 0) {
-            if(outPutBuffer!=null){
-                outPutBuffer=new ByteBuffer[3];
+            if(outPutBuffer[indexOutput]!=null){
+                outPutBuffer[indexOutput]=new byte[frameCallbackWidth*frameCallbackHeight*3/2];
             }
             calculateCallbackOM();
             this.mFrameCallback = frameCallback;
@@ -304,25 +310,15 @@ public class AiyaController implements GLSurfaceView.Renderer {
         if (mFrameCallback != null && (isRecord || isShoot)) {
             indexOutput = indexOutput++ >= 2 ? 0 : indexOutput;
             if (outPutBuffer[indexOutput] == null) {
-                outPutBuffer[indexOutput] = ByteBuffer.allocate(frameCallbackWidth *
-                    frameCallbackHeight*4);
+                outPutBuffer[indexOutput] = new byte[frameCallbackWidth *
+                        frameCallbackHeight*3/2];
             }
-            EasyGlUtils.bindFrameTexture(mExportFrame[0],mExportTexture[0]);
-            GLES20.glViewport(0, 0, frameCallbackWidth, frameCallbackHeight);
-            mShowFilter.setMatrix(callbackOM);
-            mShowFilter.draw();
-            frameCallback();
+            mYuvOutput.sizeChanged(frameCallbackWidth,frameCallbackHeight);
+            mYuvOutput.drawToTexture(mEffectFilter.getOutputTexture());
+            mYuvOutput.getOutput(outPutBuffer[indexOutput]);
+            mFrameCallback.onFrame(outPutBuffer[indexOutput],mEffectFilter.getTexture().getTimestamp());
             isShoot = false;
-            mShowFilter.setMatrix(SM);
-            EasyGlUtils.unBindFrameBuffer();
         }
-    }
-
-    //读取数据并回调
-    private void frameCallback(){
-        GLES20.glReadPixels(0, 0, frameCallbackWidth, frameCallbackHeight,
-            GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, outPutBuffer[indexOutput]);
-        mFrameCallback.onFrame(outPutBuffer[indexOutput].array(),mEffectFilter.getTexture().getTimestamp());
     }
 
     private ProcessCallback mcallback = new ProcessCallback() {
@@ -389,6 +385,11 @@ public class AiyaController implements GLSurfaceView.Renderer {
 
     public void onResume(){
         mGLView.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        AiyaEffects.getInstance().release();
     }
 
     /** 自定义GLSurfaceView，暴露出onAttachedToWindow

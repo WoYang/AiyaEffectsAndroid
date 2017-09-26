@@ -8,6 +8,8 @@
 package com.aiyaapp.camera.sdk.widget;
 
 import android.util.Log;
+
+import com.aiyaapp.camera.sdk.base.Renderer;
 import com.aiyaapp.camera.sdk.util.CamParaUtil;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -42,7 +44,7 @@ import com.aiyaapp.camera.sdk.filter.NoFilter;
 /**
  * Description:
  */
-public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer {
+public class CameraView extends GLSurfaceView implements Renderer {
 
     private AiyaEffects mEffect;
     private AiyaEffectFilter mEffectFilter;
@@ -99,6 +101,12 @@ public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer 
 
     @Override
     public void onPause() {
+        queueEvent(new Runnable() {
+            @Override
+            public void run() {
+                onDestroy();
+            }
+        });
         super.onPause();
         if(mCamera!=null){
             mCamera.stopPreview();
@@ -165,7 +173,12 @@ public class CameraView extends GLSurfaceView implements GLSurfaceView.Renderer 
         }
     }
 
-    public void onDestroy(){
+    @Override
+    public void onDestroy() {
+        AiyaEffects.getInstance().release();
+    }
+
+    public void destroy(){
         setPreserveEGLContextOnPause(false);
         onPause();
     }

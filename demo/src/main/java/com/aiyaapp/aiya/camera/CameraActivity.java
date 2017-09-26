@@ -143,7 +143,7 @@ public class CameraActivity extends EffectSelectActivity implements FrameCallbac
     protected void onDestroy() {
         super.onDestroy();
         if(mCameraView!=null){
-            mCameraView.onDestroy();
+            mCameraView.destroy();
         }
     }
 
