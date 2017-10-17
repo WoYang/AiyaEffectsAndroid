@@ -11,10 +11,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.ImageFormat;
+import android.graphics.YuvImage;
 import android.net.Uri;
 import android.provider.MediaStore;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -120,11 +123,24 @@ public class EffectSelectActivity extends AppCompatActivity implements EffectAda
             @Override
             public void run() {
                 LogUtils.e("has take pic");
-                Bitmap bitmap=Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
-                ByteBuffer b=ByteBuffer.wrap(bytes);
-                bitmap.copyPixelsFromBuffer(b);
-                saveBitmap(bitmap);
-                bitmap.recycle();
+
+                File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/test.yuv");
+                try {
+                    FileOutputStream fos=new FileOutputStream(file);
+                    fos.write(bytes);
+                    fos.flush();
+                    fos.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                //导出的是yuv的数据
+//                Bitmap bitmap=Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+//                ByteBuffer b=ByteBuffer.wrap(bytes);
+//                bitmap.copyPixelsFromBuffer(b);
+//                saveBitmap(bitmap);
+//                bitmap.recycle();
             }
         }).start();
     }

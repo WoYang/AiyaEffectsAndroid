@@ -313,6 +313,7 @@ public class AiyaController implements Renderer {
                 outPutBuffer[indexOutput] = new byte[frameCallbackWidth *
                         frameCallbackHeight*3/2];
             }
+            GLES20.glDisable(GLES20.GL_BLEND);
             mYuvOutput.sizeChanged(frameCallbackWidth,frameCallbackHeight);
             mYuvOutput.drawToTexture(mEffectFilter.getOutputTexture());
             mYuvOutput.getOutput(outPutBuffer[indexOutput]);
