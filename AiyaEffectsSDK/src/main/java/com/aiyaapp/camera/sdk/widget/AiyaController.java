@@ -354,6 +354,7 @@ public class AiyaController implements Renderer {
         }
         mGLView.surfaceDestroyed(null);
         mGLView.detachedFromWindow();
+        isParamSet.set(false);
     }
 
     protected void glInit(GLEnvironment env){
